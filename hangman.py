@@ -20,7 +20,7 @@ game_over = 6
 spacing = " " * game_over * 2
 
 
-def load_gun(shots):
+def load_gun(shots):  # I opted for ASCII art
     if shots < 0 or shots > game_over:
         raise ValueError("This is overkill")
     print(",----" + spacing + " O\n" +
@@ -47,9 +47,9 @@ class Puzzle:
         self.answer = answer.upper() if answer else pick_word()
         self.tried = [] if tried is None else tried
         self.size, self.solved, self.leftover, self.present, self.frequencies = self.discern()
-        self.score = [0, 0]
+        self.score = [0, 0]  # First index is right answers, second index is wrong answers
 
-        for guess in self.tried:
+        for guess in self.tried:  # Handling cases with already partially played games
             if guess in self.leftover:
                 self.solved.append(guess)
                 self.leftover.remove(guess)
@@ -60,6 +60,7 @@ class Puzzle:
     def discern(self):
         present, frequencies = self.find_freq()
         return len(present), [], present, present, frequencies
+        # Returns amount of letters needed, letters guessed and not guessed yet
 
     def reconfigure(self):
         self.answer = pick_word()
